@@ -1,0 +1,77 @@
+import { Building2, Mail, Phone } from "lucide-react";
+
+const Footer = () => {
+  return (
+    <footer className="bg-secondary text-secondary-foreground py-16">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Company Info */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center space-x-4 mb-6">
+              <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                <Building2 className="w-7 h-7 text-primary-foreground" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold">PilotImmo</h3>
+                <p className="text-sm text-secondary-foreground/70">Gestion patrimoniale immobilière</p>
+              </div>
+            </div>
+            
+            <p className="text-secondary-foreground/80 mb-6 max-w-md">
+              Spécialistes de la valorisation de patrimoine locatif. 
+              Nous transformons vos biens complexes en opportunités rentables.
+            </p>
+            
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center space-x-3">
+                <Phone className="w-4 h-4 text-primary" />
+                <span>07 67 38 23 68</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="w-4 h-4 text-primary" />
+                <span>hello@pilotimmo.com</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Nos Services</h4>
+            <ul className="space-y-2 text-sm text-secondary-foreground/80">
+              <li>Conseil d'expert immobilier</li>
+              <li>Audit énergétique</li>
+              <li>Valorisation de biens</li>
+              <li>Gestion opérationnelle</li>
+              <li>Gestion locative</li>
+              <li>Transaction</li>
+            </ul>
+          </div>
+
+          {/* Problématiques */}
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Vos problématiques</h4>
+            <ul className="space-y-2 text-sm text-secondary-foreground/80">
+                <li>Passoire énergétique</li>
+                <li>Biens vacants</li>
+                <li>Vente longue</li>
+                <li>Succession</li>
+                <li>Impayés</li>
+                <li>Squat</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-secondary-foreground/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-secondary-foreground/60">
+          <p>© 2024 PilotImmo. Tous droits réservés.</p>
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-6 mt-4 md:mt-0 text-center sm:text-left">
+            <span>SIRET: 123 456 789 00012</span>
+            <span>Carte professionnelle: CPI 7501 2024 000 012 345</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

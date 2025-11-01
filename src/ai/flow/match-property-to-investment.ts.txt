@@ -1,0 +1,70 @@
+// src/ai/flows/match-property-to-investment.ts
+'use server';
+/**
+ * @fileOverview Matches user-provided information about a hard-to-rent property with investment opportunities.
+ *
+ * - matchPropertyToInvestment - A function that takes property details and returns a list of matching investment opportunities.
+ * - MatchPropertyToInvestmentInput - The input type for the matchPropertyToInvestment function.
+ * - MatchPropertyToInvestmentOutput - The return type for the matchPropertyToInvestment function.
+ */
+
+import {ai} from '@/ai/genkit';
+import {z} from 'genkit';
+
+const MatchPropertyToInvestmentInputSchema = z.object({
+  propertyDetails: z
+    .string()
+    .describe(
+      'Detailed description of the hard-to-rent property, including type, location, condition, and any specific challenges.'
+    ),
+});
+export type MatchPropertyToInvestmentInput = z.infer<typeof MatchPropertyToInvestmentInputSchema>;
+
+const MatchPropertyToInvestmentOutputSchema = z.object({
+  investmentOpportunities: z.array(
+    z.object({
+      opportunityName: z.string().describe('Name of the investment opportunity.'),
+      description: z.string().describe('Brief description of the investment opportunity.'),
+      matchScore: z.number().describe('A score indicating how well the opportunity matches the property details.'),
+    })
+  ).describe('A list of investment opportunities that match the provided property details.'),
+});
+export type MatchPropertyToInvestmentOutput = z.infer<typeof MatchPropertyToInvestmentOutputSchema>;
+
+export async function matchPropertyToInvestment(input: MatchPropertyToInvestmentInput): Promise<MatchPropertyToInvestmentOutput> {
+  return matchPropertyToInvestmentFlow(input);
+}
+
+const prompt = ai.definePrompt({
+  name: 'matchPropertyToInvestmentPrompt',
+  input: {schema: MatchPropertyToInvestmentInputSchema},
+  output: {schema: MatchPropertyToInvestmentOutputSchema},
+  prompt: `You are an expert in real estate investment matching. A user will provide you with details of their hard-to-rent property.
+
+  Based on the property details, provide a list of potential investment opportunities from PilotImmo's portfolio that might be a good fit for the user, considering options such as selling or partnering.
+
+  Property Details: {{{propertyDetails}}}
+
+  Return the investment opportunities in the following JSON format:
+  {
+    "investmentOpportunities": [
+      {
+        "opportunityName": "Name of the investment opportunity",
+        "description": "Brief description of the investment opportunity",
+        "matchScore": A number between 0 and 1 indicating how well the opportunity matches the property details
+      }
+    ]
+  }`,
+});
+
+const matchPropertyToInvestmentFlow = ai.defineFlow(
+  {
+    name: 'matchPropertyToInvestmentFlow',
+    inputSchema: MatchPropertyToInvestmentInputSchema,
+    outputSchema: MatchPropertyToInvestmentOutputSchema,
+  },
+  async input => {
+    const {output} = await prompt(input);
+    return output!;
+  }
+);

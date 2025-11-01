@@ -1,0 +1,59 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Home, Zap, Gift, TrendingDown } from "lucide-react";
+
+const problems = [
+  {
+    icon: <Home className="w-12 h-12 text-primary" />,
+    title: "Vacance Locative",
+    description: "Votre bien reste inoccupé pendant des mois ? Nous analysons les blocages (prix, état, positionnement) et mettons en place une stratégie de relocation ciblée et efficace.",
+  },
+  {
+    icon: <Zap className="w-12 h-12 text-primary" />,
+    title: "Passoire Énergétique",
+    description: "DPE F ou G qui bloque la location ? Nous vous accompagnons dans la rénovation énergétique : audit, financement, travaux et remise en conformité pour valoriser votre bien.",
+  },
+  {
+    icon: <Gift className="w-12 h-12 text-primary" />,
+    title: "Succession",
+    description: "Un bien reçu en héritage à gérer ou vendre ? Nous vous aidons à évaluer, optimiser et céder le patrimoine hérité dans les meilleures conditions fiscales et financières.",
+  },
+  {
+    icon: <TrendingDown className="w-12 h-12 text-primary" />,
+    title: "Rentabilité en Baisse",
+    description: "Votre investissement ne rapporte plus ? Nous réalisons un audit complet, identifions les leviers d'amélioration et redéfinissons votre stratégie patrimoniale.",
+  },
+];
+
+const Problems = () => {
+  return (
+    <section id="problematiques" className="py-20 lg:py-28 bg-background">
+      <div className="container mx-auto px-6">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-secondary-dark">
+            Vos Problématiques, Nos Solutions
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Nous intervenons sur tous les freins à la rentabilité de votre patrimoine
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+          {problems.map((problem, index) => (
+            <Card key={index} className="group overflow-hidden text-center border-2 border-transparent hover:border-primary transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-xl rounded-2xl">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <CardHeader className="items-center">
+                {problem.icon}
+                <CardTitle className="text-xl font-bold pt-4">{problem.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">{problem.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Problems;

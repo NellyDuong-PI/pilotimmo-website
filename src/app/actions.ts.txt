@@ -1,0 +1,67 @@
+"use server";
+
+import { z } from "zod";
+// import { matchPropertyToInvestment, type MatchPropertyToInvestmentOutput } from "@/ai/flows/match-property-to-investment";
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères." }),
+  email: z.string().email({ message: "Veuillez saisir une adresse e-mail valide." }),
+  phone: z.string().min(10, { message: "Le numéro de téléphone doit être valide." }),
+  message: z.string().min(20, { message: "Veuillez décrire votre situation en au moins 20 caractères." }),
+});
+
+export type FormState = {
+  message: string;
+  data?: any; // MatchPropertyToInvestmentOutput['investmentOpportunities'];
+  errors?: {
+    name?: string[];
+    email?: string[];
+    phone?: string[];
+    message?: string[];
+    _form?: string[];
+  };
+};
+
+export async function findInvestmentOpportunities(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const validatedFields = formSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    message: formData.get("message"),
+  });
+  
+  if (!validatedFields.success) {
+    return {
+      message: "Veuillez corriger les erreurs dans le formulaire.",
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  // try {
+  //   const result = await matchPropertyToInvestment({
+  //     propertyDetails: validatedFields.data.message,
+  //   });
+    
+  //   if (!result.investmentOpportunities || result.investmentOpportunities.length === 0) {
+  //     return { 
+  //       message: "Merci pour votre demande. Bien qu'aucune correspondance automatique n'ait été trouvée, un expert va étudier votre cas et vous contactera sous 48h.",
+  //     };
+  //   }
+
+  //   return { 
+  //     message: "Succès! Nous avons trouvé des correspondances pour votre bien.", 
+  //     data: result.investmentOpportunities 
+  //   };
+  // } catch (e) {
+  //   console.error(e);
+  //   return {
+  //     message: "Une erreur est survenue lors de l'analyse. Veuillez réessayer plus tard. Votre demande a tout de même été enregistrée.",
+  //   };
+  // }
+   return {
+      message: "Votre message a été envoyé avec succès !",
+    };
+}

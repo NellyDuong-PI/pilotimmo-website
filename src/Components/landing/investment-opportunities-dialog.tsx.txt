@@ -1,0 +1,62 @@
+"use client";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Star } from "lucide-react";
+import type { MatchPropertyToInvestmentOutput } from "@/ai/flows/match-property-to-investment";
+
+interface InvestmentOpportunitiesDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  opportunities: MatchPropertyToInvestmentOutput["investmentOpportunities"] | undefined;
+}
+
+const InvestmentOpportunitiesDialog = ({
+  open,
+  onOpenChange,
+  opportunities,
+}: InvestmentOpportunitiesDialogProps) => {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[625px]">
+        <DialogHeader>
+          <DialogTitle className="text-2xl">Opportunités d'Investissement</DialogTitle>
+          <DialogDescription>
+            Suite à l'analyse de votre situation, voici des opportunités de notre portefeuille qui pourraient correspondre. Nous vous contacterons pour en discuter.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto pr-2">
+          {opportunities?.map((opp, index) => (
+            <Card key={index} className="w-full">
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <CardTitle className="text-lg">{opp.opportunityName}</CardTitle>
+                  <div className="flex items-center gap-1 text-sm text-amber-500 font-bold">
+                    <Star className="w-4 h-4 fill-current" />
+                    <span>{(opp.matchScore * 100).toFixed(0)}%</span>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">{opp.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <DialogFooter>
+          <Button onClick={() => onOpenChange(false)}>Fermer</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default InvestmentOpportunitiesDialog;

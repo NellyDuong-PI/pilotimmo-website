@@ -1,0 +1,62 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+const steps = [
+  {
+    number: "1",
+    title: "Diagnostic",
+    description: "Analyse complète de votre patrimoine, identification des problématiques et évaluation du potentiel de valorisation.",
+  },
+  {
+    number: "2",
+    title: "Stratégie",
+    description: "Élaboration d'un plan d'action personnalisé avec objectifs chiffrés, planning et budget détaillé.",
+  },
+  {
+    number: "3",
+    title: "Mise en Œuvre",
+    description: "Déploiement des actions de valorisation, coordination des intervenants et gestion opérationnelle.",
+  },
+  {
+    number: "4",
+    title: "Pilotage",
+    description: "Suivi continu des performances, reporting régulier et ajustements pour optimiser les résultats.",
+  },
+];
+
+const Process = () => {
+  return (
+    <section id="processus" className="py-20 lg:py-28 bg-background">
+      <div className="container mx-auto px-6">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-secondary-dark">
+            Notre Méthode en 4 Étapes
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Une approche structurée pour des résultats mesurables
+          </p>
+        </div>
+
+        <div className="relative mt-16">
+          <div className="absolute top-10 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent hidden lg:block" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+            {steps.map((step, index) => (
+              <Card key={index} className="text-center shadow-md hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 rounded-2xl">
+                <CardHeader className="items-center">
+                  <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-white shadow-lg">
+                    <span className="text-3xl font-extrabold">{step.number}</span>
+                  </div>
+                  <CardTitle className="text-xl font-bold pt-4">{step.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{step.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Process;

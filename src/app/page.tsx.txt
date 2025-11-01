@@ -1,0 +1,19 @@
+import Hero from '@/components/landing/hero';
+import Problems from '@/components/landing/problems';
+import Services from '@/components/landing/services';
+import Process from '@/components/landing/process';
+import AboutUs from '@/components/landing/about-us';
+import ContactSection from '@/components/landing/contact';
+
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <Problems />
+      <Services />
+      <Process />
+      <AboutUs />
+      <ContactSection />
+    </>
+  );
+}
